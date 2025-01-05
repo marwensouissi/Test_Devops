@@ -1,0 +1,43 @@
+# Deployment for MySQL
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1  # Number of pods to run
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:latest  # Use the latest MySQL image
+        ports:
+        - containerPort: 3306  # MySQL default port
+        env:  # Environment variables for MySQL configuration
+        - name: MYSQL_DATABASE
+          value: "gestionfoyer"  # Set the default database name
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root"  # Root password for MySQL
+
+---
+
+# Service for MySQL
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  selector:
+    app: mysql  # Match the app label of the pods
+  ports:
+  - protocol: TCP
+    port: 3306  # Port exposed by the service
+    targetPort: 3306  # Port on the container
+  type: ClusterIP  # Internal access only within the cluster

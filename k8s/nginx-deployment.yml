@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-proxy
+  labels:
+    app: mysql-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-proxy
+  template:
+    metadata:
+      labels:
+        app: mysql-proxy
+    spec:
+      containers:
+      - name: mysql-proxy
+        image: marwensouissi/nginx:latest
+        ports:
+        - containerPort: 3306
