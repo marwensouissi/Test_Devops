@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -16,9 +16,12 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: marwensouissi/angular:latest
+        image: marwensouissi/angulardevops:latest
+        imagePullPolicy: Always
+
         ports:
         - containerPort: 4200
+
 ---
 apiVersion: v1
 kind: Service
@@ -31,4 +34,4 @@ spec:
   - protocol: TCP
     port: 4200
     targetPort: 4200
-  type: LoadBalancer
+  type: NodePort
