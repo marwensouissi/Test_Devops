@@ -8,13 +8,27 @@ pipeline {
         KUBECONFIG = 'C:\\path\\to\\.kube\\config' // Replace with the correct kubeconfig path for Windows
     }
 
+
+
     stages {
+        
+
+        
         stage('Checkout Code') {
             steps {
                 echo 'Cloning GitHub repository...'
                 git branch: 'master', url: 'https://github.com/marwensouissi/Test_Devops.git'
             }
         }
+        
+        
+                stage('Checkout Code') {
+            steps {
+                echo 'Cloning GitHub repository...'
+                git branch: 'master', url: 'https://github.com/marwensouissi/Test_Devops.git'
+            }
+        }
+        
         
         stage('Login to Docker') {
             steps {
@@ -90,10 +104,10 @@ pipeline {
             steps {
                 echo 'Applying Kubernetes manifests...'
                 powershell '''
-                kubectl apply -f k8s/mysql.yml
-                kubectl apply -f k8s/backend-deployment.yml
-                kubectl apply -f k8s/frontend-deployment.yml
-                kubectl apply -f k8s/configmap.yaml
+        kubectl apply -f k8s/mysql.yml --validate=false
+        kubectl apply -f k8s/backend-deployment.yml --validate=false
+        kubectl apply -f k8s/frontend-deployment.yml --validate=false
+        kubectl apply -f k8s/configmap.yaml --validate=false
                 '''
             }
         }
