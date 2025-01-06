@@ -1,5 +1,5 @@
-# Use Node.js as the base image
-FROM node:20
+# Stage 1: Build the Angular application
+FROM node:20 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -17,8 +17,14 @@ COPY . .
 # Build the Angular project with production configuration
 RUN ng build --configuration production
 
-# Expose port 4200 for the Angular app
-EXPOSE 4200
+# Stage 2: Serve the Angular application with a lightweight image
+FROM nginx:alpine
 
-# Run the Angular app
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--disable-host-check"]
+# Copy the Angular build output to the Nginx HTML directory
+COPY --from=build /app/dist/<your-angular-project-name> /usr/share/nginx/html
+
+# Expose port 80 for the Nginx server
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
