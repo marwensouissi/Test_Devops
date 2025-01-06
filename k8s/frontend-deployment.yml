@@ -18,7 +18,6 @@ spec:
       - name: frontend
         image: marwensouissi/angulardevops:latest
         imagePullPolicy: Always
-
         ports:
         - containerPort: 4200
 

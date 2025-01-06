@@ -1,31 +1,40 @@
 version: "3.8"
 
 services:
+  # MySQL Database
   mysqldb:
     image: mysql:latest
+    container_name: mysqldb
     restart: always
     ports:
-      - "3307:3307"
+      - "3307:3306" # Map port 3306 of the container to 3307 on the host
     environment:
-      - MYSQL_DATABASE=gestionfoyer
-      - MYSQL_ROOT_PASSWORD=root
-    
-  app:
-    image: mondherar/springboot:latest
+      MYSQL_DATABASE: gestionfoyer
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Spring Boot Backend
+  backend:
+    image: marwensouissi/springboot:latest
+    container_name: backend
     restart: always
     ports:
       - "8089:8089"
     depends_on:
       - mysqldb
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
 
+  # Angular Frontend
   frontend:
-    image: mondherar/angular:latest
+    image: marwensouissi/angular:latest
+    container_name: frontend
     restart: always
     ports:
       - "4200:4200"
     depends_on:
-      - app
-      - mysqldb
-    
+      - backend
+
 volumes:
-  db:
+  db_data:
