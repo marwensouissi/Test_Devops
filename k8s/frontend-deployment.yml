@@ -14,7 +14,6 @@ spec:
       labels:
         app: frontend
     spec:
-      hostNetwork: true
       containers:
       - name: frontend
         image: marwensouissi/angulardevops:latest
@@ -34,4 +33,4 @@ spec:
   - protocol: TCP
     port: 4200
     targetPort: 4200
-  type: LoadBalancer
+  type: NodePort
