@@ -114,7 +114,7 @@ public class IAuthenticationServicesImp implements IAuthenticationServices {
 
         mail.setSubject("Reset Password");
         mail.setTo(userexisting.getEmail());
-        mail.setContent("Votre nouveau TOKEN est : " + "http://localhost:4200/resetpassword/"+userexisting.getPasswordResetToken());
+        mail.setContent("Votre nouveau TOKEN est : " + "http://frontend:4200/resetpassword/"+userexisting.getPasswordResetToken());
         emailService.sendSimpleEmail(mail);
         userRepository.save(userexisting);
         message.put("user","user FOUND and email is Sent");

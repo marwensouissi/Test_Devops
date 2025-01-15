@@ -17,6 +17,8 @@ spec:
       containers:
       - name: backend
         image: marwensouissi/springboot:latest
+        imagePullPolicy: Always
+
         ports:
         - containerPort: 8089
         env:
