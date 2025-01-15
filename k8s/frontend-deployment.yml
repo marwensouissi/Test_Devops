@@ -14,6 +14,7 @@ spec:
       labels:
         app: frontend
     spec:
+      hostNetwork: true
       containers:
       - name: frontend
         image: marwensouissi/angulardevops:latest
